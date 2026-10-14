@@ -1,0 +1,20 @@
+{
+  "name": "software-design-doc",
+  "version": "1.0.0",
+  "description": "A complete toolkit for creating, reviewing, and maintaining software design documents (SDDs): 17 section and process skills plus two orchestrators, based on Atlassian's software design document guidance.",
+  "author": {
+    "name": "Habib Ghanizadeh",
+    "url": "https://github.com/marsxx2"
+  },
+  "keywords": [
+    "software-design-document",
+    "sdd",
+    "architecture",
+    "documentation",
+    "technical-spec",
+    "design-review"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/marsxx2/software-design-doc",
+  "repository": "https://github.com/marsxx2/software-design-doc"
+}

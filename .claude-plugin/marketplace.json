@@ -1,0 +1,22 @@
+{
+  "name": "software-design-doc",
+  "owner": {
+    "name": "Habib Ghanizadeh"
+  },
+  "plugins": [
+    {
+      "name": "software-design-doc",
+      "source": "./",
+      "description": "A complete toolkit for creating, reviewing, and maintaining software design documents (SDDs): 17 section and process skills plus two orchestrators, based on Atlassian's software design document guidance.",
+      "version": "1.0.0",
+      "keywords": [
+        "software-design-document",
+        "sdd",
+        "architecture",
+        "documentation",
+        "technical-spec",
+        "design-review"
+      ]
+    }
+  ]
+}
