@@ -8,7 +8,7 @@ description: "Audits an existing software design document against best practices
 Review an existing design document and report what to fix, in priority order.
 
 ## Workflow
-1. **Read the whole document** first. Identify type (SDD, RFC, ADR, spec) and map its sections to the canonical eight.
+1. **Find and read the whole document** first. It may be attached or uploaded (check `/mnt/user-data/uploads/`) rather than pasted. If several files are present, confirm which one is under review. Review only what is provided; never substitute a document you would have written yourself. Identify type (SDD, RFC, ADR, spec) and map its sections to the canonical eight.
 2. **Completeness check.** For each canonical section, mark: Present & strong / Present but thin / Missing. Use the criteria in `references/review-checklist.md`.
 3. **Run the focused audits** (apply their logic inline, or invoke the skills):
    - Style and terminology: `sdd-style-consistency`
@@ -55,6 +55,9 @@ Review an existing design document and report what to fix, in priority order.
 
 ## Shared conventions (all SDD skills)
 
+- **Source material first.** Before drafting anything, look for attached or uploaded files (check the conversation and `/mnt/user-data/uploads/`), linked docs, and pasted text. When the user says "this", "the attached", "this backend/project/spec", that material IS the subject. Read it fully, treat it as the source of truth, and take the system name, domain, terminology, stack, and requirements from it.
+- **Stop on conflicts.** If the prompt's description disagrees with the source material (different domain, system, scale, or stack), do not silently follow either one. Stop and ask one short question that shows the discrepancy ("The attached spec describes a dental clinic system, but your message describes a URL shortener. Which should I design?"). A requested stack or number that the source material does not mention is a *proposal to confirm*, not a fact.
+- **Match the language.** Write the document in the language of the source material or request. If the source material and the prompt use different languages, ask which language the document should be in. Keep identifiers, code, and standard names (FHIR, REST, SQL) in their original form; for right-to-left languages keep the structure and numbering unchanged.
 - Canonical section numbers: 1 Introduction & Overview, 2 System Architecture, 3 Data Design, 4 Interface Design, 5 Component Design, 6 User Interface Design, 7 Assumptions & Dependencies, 8 Glossary. Appendices: A Traceability Matrix, B Decision Log, C Open Questions. Keep these numbers so sections from different skills assemble cleanly.
 - Mark anything you had to infer as `[ASSUMPTION: ...]` and anything missing as `[TBD: ...]`. Never invent facts about the user's system to make a section look complete; a visible gap is more useful to reviewers than a plausible fabrication.
 - Give requirements stable IDs (`REQ-001`) and design decisions stable IDs (`DEC-001`) so they can be traced.

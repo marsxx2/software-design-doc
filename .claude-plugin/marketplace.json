@@ -8,7 +8,7 @@
       "name": "software-design-doc",
       "source": "./",
       "description": "A complete toolkit for creating, reviewing, and maintaining software design documents (SDDs): 17 section and process skills plus two orchestrators, based on Atlassian's software design document guidance.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "keywords": [
         "software-design-document",
         "sdd",

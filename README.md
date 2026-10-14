@@ -85,12 +85,17 @@ There are three ways to invoke the skills, from most hands-off to most explicit.
 Each skill's description lists the situations it covers, so a natural request normally activates the right skill:
 
 ```
-Write a design doc for a URL shortener. It needs custom aliases, click
-analytics, and about 10M redirects/day. Stack: Go, Postgres, Redis.
+Write a design doc for <your system>. Key needs: <3-5 requirements>.
+Scale: <numbers>. Stack: <technologies>.
+```
+```
+Write a design doc based on the attached <file name>.
 ```
 ```
 Here is our tech spec [paste or attach]. Is it ready for review?
 ```
+
+> **Use your own details.** Examples in this README (URL shortener, order management, payments API, and so on) are fictional. If you copy one verbatim, Claude will design *that* system. When you attach a file, say so ("based on the attached ...") and do not paste example requirements for a different system. If your message and your attachment disagree, the skills stop and ask which one is correct.
 
 ### 2. Name the skill
 Naming the skill is the most reliable method, especially for the narrower ones:
@@ -103,13 +108,13 @@ management system with orders, customers, and inventory.
 ### 3. Slash invocation (Claude Code)
 Plugin skills are namespaced by plugin name. Type `/` to browse, or call one directly:
 ```
-/software-design-doc:sdd-author a notification service for our mobile app
+/software-design-doc:sdd-author write the design doc for <your system> based on the attached <file>
 ```
 
 ### Common workflows
 
 **A. Create a new design doc**
-1. Start with context: system name, users, scale, stack, constraints, deadlines, links to PRDs or tickets.
+1. Start with context: system name, users, scale, stack, constraints, deadlines, and attach or link any PRD, spec, tickets, or code. Attached material is treated as the source of truth.
 2. Ask: `Use sdd-author to create a standard-depth SDD for <system>.`
 3. Answer the clarifying questions. `sdd-author` first runs `sdd-requirements-gathering`, then drafts sections 1 to 8.
 4. Review the architecture checkpoint after Section 2 and correct course there. It is the cheapest place to change direction.
@@ -146,6 +151,14 @@ Use sdd-template-publisher to create a Confluence-ready SDD template with
 guidance text, plus a lightweight variant.
 ```
 
+**G. Turn an existing spec or project description into an SDD**
+```
+Use sdd-author to write the software design document based on the attached
+project-description.md. Write it in the same language as the attachment.
+Propose a technology stack only where the spec is silent.
+```
+`sdd-author` begins by stating `Subject:` and `Based on:` so you can confirm it picked up the right file. It reuses the spec's terminology, converts its requirements into `REQ-` IDs with a source reference back to the spec, and marks anything it had to infer. If you add a stack or traffic target in the same message, it treats those as proposals to confirm, not facts from the spec.
+
 ### Depth levels for `sdd-author`
 | Level | Sections | Use for |
 |-------|----------|---------|
@@ -175,6 +188,7 @@ guidance text, plus a lightweight variant.
 ## Tips for better results
 
 - **Give context up front.** Anything missing becomes an `[ASSUMPTION]` or `[TBD]`, which you then have to resolve.
+- **Say what the attachment is.** Write "based on the attached <file>" rather than "this backend" alone, and keep requirements in the prompt consistent with the file.
 - **Attach real artifacts.** Existing schemas, OpenAPI files, PRDs, tickets, and code let the skills document what exists rather than guess.
 - **State the audience and goal.** "For execs who need to approve budget" and "for the engineers who will build it" yield different emphasis.
 - **Work in stages.** Draft, then review, then run traceability, then publish. Each turn is easier to correct than one giant request.
@@ -188,6 +202,8 @@ guidance text, plus a lightweight variant.
 |---------|-----|
 | A skill didn't trigger | Name it in the prompt (`Use sdd-...`) or use the slash form in Claude Code |
 | Orchestrator skips a sub-skill | Install the full plugin; in claude.ai upload every skill the orchestrator calls |
+| Output is about the wrong system | You probably pasted example text from this README, or your message contradicts your attachment. Re-run with "based on the attached <file>" and your own details. Update to plugin 1.0.1 or later, which asks when they conflict |
+| Output is in the wrong language | State the language you want ("write it in Persian" / "in English"); with mixed-language inputs the skills ask |
 | Output is generic | Add concrete context: scale numbers, stack, constraints, existing docs |
 | Document is too long | Request lightweight mode or name only the sections you need |
 | Mermaid diagram won't render | Wrap labels with special characters in quotes; ask for SVG instead |
@@ -207,6 +223,8 @@ guidance text, plus a lightweight variant.
 ├── scripts/
 │   ├── validate.py          # structure and metadata checks (used by CI)
 │   └── package-skills.sh    # zips each skill for claude.ai upload
+├── tests/
+│   └── regression-prompts.md  # prompts with expected behavior, run after editing skills
 ├── .github/                 # CI workflow, issue and PR templates
 ├── CHANGELOG.md  CONTRIBUTING.md  CODE_OF_CONDUCT.md  SECURITY.md  LICENSE
 └── README.md
